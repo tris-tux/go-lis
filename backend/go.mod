@@ -1,5 +1,5 @@
-module github.com/tris-tux/go-lis/backend
+module github.com/girikuncoro/belajar-docker-pemula/backend
 
-go 1.9
+go 1.15
 
 require github.com/lib/pq v1.9.0
