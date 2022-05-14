@@ -1,0 +1,28 @@
+version: '3.5'
+services:
+    task-postgres:
+      image: postgres
+      ports:
+          - 5432:5432
+      environment:
+          - POSTGRES_USER=postgres
+          - POSTGRES_PASSWORD=secret
+          - POSTGRES_DB=lis
+      volumes:
+          - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    task-backend:
+      build: ./backend
+      ports:
+          - 8080:8080
+      environment:
+          - DB_USER=postgres
+          - DB_PASSWORD=secret
+          - DB_HOST=task-postgres
+          - DB_PORT=5432
+          - DB_DATABASE=lis
+      depends_on:
+          - task-postgres
+    # todo-frontend:
+    #   build: ./frontend
+    #   ports:
+    #       - 8081:8080

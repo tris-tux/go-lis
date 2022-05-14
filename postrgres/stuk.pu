@@ -1,0 +1,20 @@
+@startuml
+
+map task {
+    task_id => int
+    title => string
+    acction_time => int
+    create_time => int
+    update_time => int
+    is_finished => bool
+}
+
+map detail {
+    detail_id => int
+    object_task_fk => int
+    object_name => string
+    id_finished => bool
+}
+
+task::task_id --> detail::objecttaskfk : detail 
+@enduml
