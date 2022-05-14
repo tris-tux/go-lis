@@ -1,4 +1,4 @@
-module github.com/tris-tux/go-list/backend
+module github.com/tris-tux/go-lis/backend
 
 go 1.9.0
 
