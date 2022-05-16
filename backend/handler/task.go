@@ -7,7 +7,7 @@ import (
 
 	"github.com/tris-tux/go-lis/backend/db"
 	"github.com/tris-tux/go-lis/backend/schema"
-	"github.com/tris-tux/go-lis/backend/services"
+	"github.com/tris-tux/go-lis/backend/service"
 )
 
 type taskHandler struct {
