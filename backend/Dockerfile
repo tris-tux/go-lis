@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-RUN go build -o task-api
+RUN go build -o todo-api
 
 EXPOSE 8080
 
-CMD ./task-api
+CMD ./todo-api

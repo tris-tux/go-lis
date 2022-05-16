@@ -1,27 +1,27 @@
-version: '3.5'
+version: '3'
 services:
-    task-postgres:
+    todo-postgres:
         image: postgres
         ports:
             - 5432:5432
         environment:
             - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=secret
-            - POSTGRES_DB=go-lis
+            - POSTGRES_PASSWORD=rahasia
+            - POSTGRES_DB=belajar
         volumes:
             - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
-    task-backend:
+    todo-backend:
         build: ./backend
         ports:
             - 8080:8080
         environment:
             - DB_USER=postgres
-            - DB_PASSWORD=secret
-            - DB_HOST=task-postgres
+            - DB_PASSWORD=rahasia
+            - DB_HOST=todo-postgres
             - DB_PORT=5432
-            - DB_DATABASE=go-lis
+            - DB_DATABASE=belajar
         depends_on:
-            - task-postgres
+            - todo-postgres
     # todo-frontend:
     #   build: ./frontend
     #   ports:
