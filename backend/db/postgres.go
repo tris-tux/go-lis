@@ -39,7 +39,7 @@ func (p *Postgres) Insert(task *schema.Task) (int, error) {
 	query := `
 		INSERT INTO task (task_id, title, acction_time, create_time, update_time, id_finished)
 		VALUES(nextval('task_id'), $1, $2, $3)
-		RETURNING id;
+		RETURNING task_id;
 	`
 
 	rows, err := p.DB.Query(query, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IdFinished))
@@ -47,13 +47,13 @@ func (p *Postgres) Insert(task *schema.Task) (int, error) {
 		return -1, err
 	}
 
-	var id int
+	var task_id int
 	for rows.Next() {
-		if err := rows.Scan(&id); err != nil {
+		if err := rows.Scan(&task_id); err != nil {
 			return -1, err
 		}
 	}
-	return id, nil
+	return task_id, nil
 }
 
 // func (p *Postgres) Update(todo *schema.Todo) error {
