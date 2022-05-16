@@ -27,7 +27,7 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 	taskList := []schema.Task{}
 	for rows.Next() {
 		var t schema.Task
-		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime, &t.CreateTime, &t.UpdateTime, &t.IdFinished); err != nil {
+		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime, &t.CreateTime, &t.UpdateTime, &t.IsFinished); err != nil {
 			return nil, err
 		}
 		taskList = append(taskList, t)
@@ -37,12 +37,12 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 
 func (p *Postgres) Insert(task *schema.Task) (int, error) {
 	query := `
-		INSERT INTO task (task_id, title, acction_time, create_time, update_time, id_finished)
+		INSERT INTO task (task_id, title, acction_time, create_time, update_time, is_finished)
 		VALUES(nextval('task_id'), $1, $2, $3)
 		RETURNING task_id;
 	`
 
-	rows, err := p.DB.Query(query, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IdFinished))
+	rows, err := p.DB.Query(query, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IsFinished))
 	if err != nil {
 		return -1, err
 	}

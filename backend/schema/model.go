@@ -1,17 +1,17 @@
 package schema
 
 type Task struct {
-	TaskId int `json:"taskId"`
+	TaskId int `json:"task_id"`
 	Title string `json:"title"`
-	AcctionTime int `json:"acctionTime"`
-	CreateTime int `json:"createTime"`
-	UpdateTime int `json:"updateTime"`
-	IdFinished bool `json:"idFinished"`
+	AcctionTime int `json:"acction_time"`
+	CreateTime int `json:"create_time"`
+	UpdateTime int `json:"update_time"`
+	IsFinished bool `json:"is_finished"`
 }
 
 type Detail struct {
-	DetailId int `json:"detailId"`
-	ObjectTaskFk int `json:"objectTaskFk"`
-	ObjectName string `json:"objectName"`
-	IdFinished int `json:"idFinished"`
+	DetailId int `json:"detail_id"`
+	ObjectTaskFk int `json:"object_task_fk"`
+	ObjectName string `json:"object_name"`
+	IsFinished bool `json:"is_finished"`
 }

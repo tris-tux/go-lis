@@ -13,7 +13,7 @@ map detail {
     detail_id => int
     object_task_fk => int
     object_name => string
-    id_finished => bool
+    is_finished => bool
 }
 
 task::task_id --> detail::objecttaskfk : detail 

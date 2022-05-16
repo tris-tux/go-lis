@@ -60,13 +60,13 @@ func (h *taskHandler) insertTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := service.Insert(ctx, &task)
+	task_id, err := service.Insert(ctx, &task)
 	if err != nil {
 		responseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	responseOK(w, id)
+	responseOK(w, task_id)
 }
 
 func (h *taskHandler) updateTask(w http.ResponseWriter, r *http.Request) {
@@ -94,7 +94,7 @@ func (h *taskHandler) updateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	responseOK(w, task.ID)
+	responseOK(w, task.TaskId)
 }
 
 func (h *taskHandler) deleteTask(w http.ResponseWriter, r *http.Request) {
@@ -111,14 +111,14 @@ func (h *taskHandler) deleteTask(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var req struct {
-		ID int `json:"id"`
+		TaskId int `json:"task_id"`
 	}
 	if err := json.Unmarshal(b, &req); err != nil {
 		responseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	if err := service.Delete(ctx, req.ID); err != nil {
+	if err := service.Delete(ctx, req.TaskId); err != nil {
 		responseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

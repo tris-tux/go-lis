@@ -14,7 +14,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 			AcctionTime: 1652461200,
 			CreateTime: 1652461200,
 			UpdateTime: 1652461200,
-			IdFinished: false,
+			IsFinished: false,
 		},
 		{
 			TaskId:   2,
@@ -22,7 +22,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 			AcctionTime: 1652462100,
 			CreateTime: 1652462100,
 			UpdateTime: 1652462100,
-			IdFinished: false,
+			IsFinished: false,
 		},
 		{
 			TaskId:   3,
@@ -30,7 +30,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 			AcctionTime: 1652661200,
 			CreateTime: 1652661200,
 			UpdateTime: 1652661200,
-			IdFinished: false,
+			IsFinished: false,
 		},
 	}
 	return taskList, nil

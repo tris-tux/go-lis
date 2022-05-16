@@ -7,7 +7,7 @@ services:
         environment:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=secret
-            - POSTGRES_DB=go-lis
+            - POSTGRES_DB=task
         volumes:
             - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
     task-backend:
@@ -19,6 +19,6 @@ services:
             - DB_PASSWORD=secret
             - DB_HOST=task-postgres
             - DB_PORT=5432
-            - DB_DATABASE=go-lis
+            - DB_DATABASE=task
         depends_on:
             - task-postgres
