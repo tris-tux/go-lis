@@ -10,24 +10,27 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 	taskList := []schema.Task{
 		{
 			TaskId:   1,
-			Title: []string{"AAA", "AA"},
+			Title: "SATU",
 			AcctionTime: 1652461200,
+			ObjectiveList: []string{"AAA", "AA"},
 			// CreateTime: 1652461200,
 			// UpdateTime: 1652461200,
 			// IsFinished: false,
 		},
 		{
 			TaskId:   2,
-			Title: []string{"BBB", "BB"},
+			Title: "DUA",
 			AcctionTime: 1652462100,
+			ObjectiveList: []string{"BBB", "BB"},
 			// CreateTime: 1652462100,
 			// UpdateTime: 1652462100,
 			// IsFinished: false,
 		},
 		{
 			TaskId:   3,
-			Title: []string{"CCC", "CC"},
+			Title: "TIGA",
 			AcctionTime: 1652661200,
+			ObjectiveList: []string{"CCC", "CC"},
 			// CreateTime: 1652661200,
 			// UpdateTime: 1652661200,
 			// IsFinished: false,
@@ -36,8 +39,8 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 	return taskList, nil
 }
 
-func (s *Static) Insert(task *schema.Task) ([]string, error) {
-	return []string{"0"}, nil
+func (s *Static) Insert(task *schema.Task) (string, error) {
+	return "0", nil
 }
 
 func (s *Static) Update(task *schema.Task) error {
