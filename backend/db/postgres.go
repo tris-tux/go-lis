@@ -38,7 +38,7 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 func (p *Postgres) Insert(task *schema.Task) (int, error) {
 	query := `
 		INSERT INTO task (task_id, title, acction_time, create_time, update_time, is_finished)
-		VALUES(nextval('task_id'), $1, $2, $3)
+		VALUES(nextval('task_id'), $1, $2, $3, $4, $5)
 		RETURNING task_id;
 	`
 
@@ -56,26 +56,26 @@ func (p *Postgres) Insert(task *schema.Task) (int, error) {
 	return task_id, nil
 }
 
-// func (p *Postgres) Update(todo *schema.Todo) error {
-// 	query := `
-// 		UPDATE todo
-// 		SET note = $2, done = $3
-// 		WHERE id = $1;
-// 	`
+func (p *Postgres) Update(task *schema.Task) error {
+	query := `
+		UPDATE task
+		SET title = $2, acction_time = $3, create_time = $4, update_time = $5, is_finished = $6
+		WHERE task_id = $1;
+	`
 
-// 	rows, err := p.DB.Query(query, todo.ID, todo.Note, convertBoolToBit(todo.Done))
-// 	if err != nil {
-// 		return err
-// 	}
+	rows, err := p.DB.Query(query, task.TaskId, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IsFinished))
+	if err != nil {
+		return err
+	}
 
-// 	var id int
-// 	for rows.Next() {
-// 		if err := rows.Scan(&id); err != nil {
-// 			return err
-// 		}
-// 	}
-// 	return nil
-// }
+	var task_id int
+	for rows.Next() {
+		if err := rows.Scan(&task_id); err != nil {
+			return err
+		}
+	}
+	return nil
+}
 
 func (p *Postgres) Delete(task_id int) error {
 	query := `

@@ -9,9 +9,9 @@ type Task struct {
 	IsFinished bool `json:"is_finished"`
 }
 
-type Detail struct {
-	DetailId int `json:"detail_id"`
-	ObjectTaskFk int `json:"object_task_fk"`
-	ObjectName string `json:"object_name"`
-	IsFinished bool `json:"is_finished"`
-}
+// type Detail struct {
+// 	DetailId int `json:"detail_id"`
+// 	ObjectTaskFk int `json:"object_task_fk"`
+// 	ObjectName string `json:"object_name"`
+// 	IsFinished bool `json:"is_finished"`
+// }
