@@ -27,7 +27,7 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 	taskList := []schema.Task{}
 	for rows.Next() {
 		var t schema.Task
-		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime, &t.CreateTime, &t.UpdateTime, &t.IsFinished); err != nil {
+		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime); err != nil {
 			return nil, err
 		}
 		taskList = append(taskList, t)
@@ -35,25 +35,25 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 	return taskList, nil
 }
 
-func (p *Postgres) Insert(task *schema.Task) (int, error) {
+func (p *Postgres) Insert(task *schema.Task) (string, error) {
 	query := `
 		INSERT INTO task (task_id, title, acction_time, create_time, update_time, is_finished)
-		VALUES(nextval('task_id'), $1, $2, $3, $4, $5)
-		RETURNING task_id;
+		VALUES(nextval('task_id'), $1, $2, $2, $2, '0')
+		RETURNING title;
 	`
 
-	rows, err := p.DB.Query(query, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IsFinished))
+	rows, err := p.DB.Query(query, task.Title, task.AcctionTime)
 	if err != nil {
-		return -1, err
+		return "-1", err
 	}
 
-	var task_id int
+	var title string
 	for rows.Next() {
-		if err := rows.Scan(&task_id); err != nil {
-			return -1, err
+		if err := rows.Scan(&title); err != nil {
+			return "-1", err
 		}
 	}
-	return task_id, nil
+	return title, nil
 }
 
 func (p *Postgres) Update(task *schema.Task) error {
@@ -63,7 +63,7 @@ func (p *Postgres) Update(task *schema.Task) error {
 		WHERE task_id = $1;
 	`
 
-	rows, err := p.DB.Query(query, task.TaskId, task.Title, task.AcctionTime, task.CreateTime, task.UpdateTime, convertBoolToBit(task.IsFinished))
+	rows, err := p.DB.Query(query, task.TaskId, task.Title, task.AcctionTime)
 	if err != nil {
 		return err
 	}

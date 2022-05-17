@@ -4,9 +4,9 @@ type Task struct {
 	TaskId int `json:"task_id"`
 	Title string `json:"title"`
 	AcctionTime int `json:"acction_time"`
-	CreateTime int `json:"create_time"`
-	UpdateTime int `json:"update_time"`
-	IsFinished bool `json:"is_finished"`
+	// CreateTime int `json:"create_time"`
+	// UpdateTime int `json:"update_time"`
+	// IsFinished bool `json:"is_finished"`
 }
 
 // type Detail struct {
