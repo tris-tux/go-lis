@@ -10,7 +10,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 	taskList := []schema.Task{
 		{
 			TaskId:   1,
-			Title: "AAA",
+			Title: []string{"AAA", "AA"},
 			AcctionTime: 1652461200,
 			// CreateTime: 1652461200,
 			// UpdateTime: 1652461200,
@@ -18,7 +18,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 		},
 		{
 			TaskId:   2,
-			Title: "BBB",
+			Title: []string{"BBB", "BB"},
 			AcctionTime: 1652462100,
 			// CreateTime: 1652462100,
 			// UpdateTime: 1652462100,
@@ -26,7 +26,7 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 		},
 		{
 			TaskId:   3,
-			Title: "CCC",
+			Title: []string{"CCC", "CC"},
 			AcctionTime: 1652661200,
 			// CreateTime: 1652661200,
 			// UpdateTime: 1652661200,
@@ -36,8 +36,8 @@ func (s *Static) GetAll() ([]schema.Task, error) {
 	return taskList, nil
 }
 
-func (s *Static) Insert(task *schema.Task) (string, error) {
-	return "0", nil
+func (s *Static) Insert(task *schema.Task) ([]string, error) {
+	return []string{"0"}, nil
 }
 
 func (s *Static) Update(task *schema.Task) error {

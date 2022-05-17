@@ -35,25 +35,26 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 	return taskList, nil
 }
 
-func (p *Postgres) Insert(task *schema.Task) (string, error) {
-	query := `
-		INSERT INTO task (task_id, title, acction_time, create_time, update_time, is_finished)
-		VALUES(nextval('task_id'), $1, $2, $2, $2, '0')
-		RETURNING title;
-	`
+func (p *Postgres) Insert(task *schema.Task) ([]string, error) {
+	return task.Title, nil
+	// query := `
+	// 	INSERT INTO task (task_id, title, acction_time, create_time, update_time, is_finished)
+	// 	VALUES(nextval('task_id'), $1, $2, $2, $2, '0')
+	// 	RETURNING title;
+	// `
 
-	rows, err := p.DB.Query(query, task.Title, task.AcctionTime)
-	if err != nil {
-		return "-1", err
-	}
+	// rows, err := p.DB.Query(query, task.Title, task.AcctionTime)
+	// if err != nil {
+	// 	return "-1", err
+	// }
 
-	var title string
-	for rows.Next() {
-		if err := rows.Scan(&title); err != nil {
-			return "-1", err
-		}
-	}
-	return title, nil
+	// var title string
+	// for rows.Next() {
+	// 	if err := rows.Scan(&title); err != nil {
+	// 		return "-1", err
+	// 	}
+	// }
+	// return title, nil
 }
 
 func (p *Postgres) Update(task *schema.Task) error {

@@ -11,7 +11,7 @@ func GetAll(ctx context.Context) ([]schema.Task, error) {
 	return db.GetAll(ctx)
 }
 
-func Insert(ctx context.Context, task *schema.Task) (string, error) {
+func Insert(ctx context.Context, task *schema.Task) ([]string, error) {
 	return db.Insert(ctx, task)
 }
 
