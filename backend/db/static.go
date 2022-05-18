@@ -69,8 +69,8 @@ func (s *Static) Update(result *schema.Result) (string, error) {
 	return "success", nil
 }
 
-func (s *Static) Delete(id int) error {
-	return nil
+func (s *Static) Delete(task_id int) (string, error) {
+	return "success", nil
 }
 
 func (s *Static) Close() {}

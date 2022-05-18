@@ -118,12 +118,18 @@ func (h *taskHandler) deleteTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err := service.Delete(ctx, req.TaskId); err != nil {
+	message, err := service.Delete(ctx, req.TaskId)
+	if err != nil {
 		responseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+	// if err := service.Delete(ctx, req.TaskId); err != nil {
+	// 	responseError(w, http.StatusInternalServerError, err.Error())
+	// 	return
+	// }
 
-	w.WriteHeader(http.StatusOK)
+	responseOK(w, message)
+	// w.WriteHeader(http.StatusOK)
 }
 
 func responseOK(w http.ResponseWriter, body interface{}) {

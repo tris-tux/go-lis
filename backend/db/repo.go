@@ -12,7 +12,7 @@ type Repo interface {
 	GetAll() ([]schema.Result, error)
 	Insert(task *schema.Task) (string, error)
 	Update(result *schema.Result) (string, error)
-	Delete(id int) error
+	Delete(task_id int) (string, error)
 	Close()
 }
 
@@ -36,8 +36,8 @@ func Update(ctx context.Context, result *schema.Result) (string, error) {
 	return getRepo(ctx).Update(result)
 }
 
-func Delete(ctx context.Context, id int) error {
-	return getRepo(ctx).Delete(id)
+func Delete(ctx context.Context, task_id int) (string, error) {
+	return getRepo(ctx).Delete(task_id)
 }
 
 func Close(ctx context.Context) {

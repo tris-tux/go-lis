@@ -19,8 +19,8 @@ func Update(ctx context.Context, result *schema.Result) (string, error) {
 	return db.Update(ctx, result)
 }
 
-func Delete(ctx context.Context, id int) error {
-	return db.Delete(ctx, id)
+func Delete(ctx context.Context, task_id int) (string, error) {
+	return db.Delete(ctx, task_id)
 }
 
 func Close(ctx context.Context) {

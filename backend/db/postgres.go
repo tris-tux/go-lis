@@ -156,17 +156,19 @@ func (p *Postgres) Update(result *schema.Result) (string, error) {
 	return title, nil
 }
 
-func (p *Postgres) Delete(task_id int) error {
+func (p *Postgres) Delete(task_id int) (string, error) {
 	query := `
 		DELETE FROM task
 		WHERE task_id = $1;
 	`
-
+	var message string
 	if _, err := p.DB.Exec(query, task_id); err != nil {
-		return err
+		return "0", err
 	}
 
-	return nil
+	message = "success"
+
+	return message, nil
 }
 
 func (p *Postgres) Close() {
