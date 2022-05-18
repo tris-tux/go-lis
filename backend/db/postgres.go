@@ -76,13 +76,13 @@ func (p *Postgres) Insert(task *schema.Task) (string, error) {
 
 	rows, err := p.DB.Query(query, task.Title, task.AcctionTime)
 	if err != nil {
-		return "-1", err
+		return "0", err
 	}
 
 	var task_id int
 	for rows.Next() {
 		if err := rows.Scan(&task_id); err != nil {
-			return "-1", err
+			return "0", err
 		}
 	}
 
@@ -97,13 +97,13 @@ func (p *Postgres) Insert(task *schema.Task) (string, error) {
 
 		rows, err := p.DB.Query(queryList, task_id, value)
 		if err != nil {
-			return "-1", err
+			return "0", err
 		}
 
 		var task_id int
 		for rows.Next() {
 			if err := rows.Scan(&task_id); err != nil {
-				return "-1", err
+				return "0", err
 			}
 		}
 	}
@@ -112,25 +112,48 @@ func (p *Postgres) Insert(task *schema.Task) (string, error) {
 	return ret, nil
 }
 
-func (p *Postgres) Update(task *schema.Task) error {
+func (p *Postgres) Update(result *schema.Result) (string, error) {
 	query := `
 		UPDATE task
-		SET title = $2, acction_time = $3, create_time = $4, update_time = $5, is_finished = $6
+		SET title = $2, update_time = $3, is_finished = $4
 		WHERE task_id = $1;
 	`
-
-	rows, err := p.DB.Query(query, task.TaskId, task.Title, task.AcctionTime)
+	var title string
+	rows, err := p.DB.Query(query, result.TaskId, result.Title, result.UpdateTime, convertBoolToBit(result.IsFinished))
 	if err != nil {
-		return err
+		return "0", err
+	}
+
+	list := result.ObjectiveList
+
+	for _, value := range list {
+		title = value.ObjectName
+		queryDetail := `
+			UPDATE detail
+			SET object_name = $2, is_finished = $3
+			WHERE detail_id = $1;
+		`
+		rowss, errs := p.DB.Query(queryDetail, value.DetailId, value.ObjectName, convertBoolToBit(value.IsFinished))
+		if errs != nil {
+			return "0", errs
+		}
+
+		var detail_id int
+		for rowss.Next() {
+			if errs := rowss.Scan(&detail_id); errs != nil {
+				return "0", errs
+			}
+		}
 	}
 
 	var task_id int
 	for rows.Next() {
 		if err := rows.Scan(&task_id); err != nil {
-			return err
+			return "0", err
 		}
 	}
-	return nil
+	title = "success"
+	return title, nil
 }
 
 func (p *Postgres) Delete(task_id int) error {

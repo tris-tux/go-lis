@@ -15,8 +15,8 @@ func Insert(ctx context.Context, task *schema.Task) (string, error) {
 	return db.Insert(ctx, task)
 }
 
-func Update(ctx context.Context, task *schema.Task) error {
-	return db.Update(ctx, task)
+func Update(ctx context.Context, result *schema.Result) (string, error) {
+	return db.Update(ctx, result)
 }
 
 func Delete(ctx context.Context, id int) error {

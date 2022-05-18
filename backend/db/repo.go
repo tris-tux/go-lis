@@ -11,7 +11,7 @@ const repoKey = "repoKey"
 type Repo interface {
 	GetAll() ([]schema.Result, error)
 	Insert(task *schema.Task) (string, error)
-	Update(task *schema.Task) error
+	Update(result *schema.Result) (string, error)
 	Delete(id int) error
 	Close()
 }
@@ -32,8 +32,8 @@ func Insert(ctx context.Context, task *schema.Task) (string, error) {
 	return getRepo(ctx).Insert(task)
 }
 
-func Update(ctx context.Context, task *schema.Task) error {
-	return getRepo(ctx).Update(task)
+func Update(ctx context.Context, result *schema.Result) (string, error) {
+	return getRepo(ctx).Update(result)
 }
 
 func Delete(ctx context.Context, id int) error {

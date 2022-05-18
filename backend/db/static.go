@@ -62,11 +62,11 @@ func (s *Static) GetAll() ([]schema.Result, error) {
 }
 
 func (s *Static) Insert(task *schema.Task) (string, error) {
-	return "0", nil
+	return "success", nil
 }
 
-func (s *Static) Update(task *schema.Task) error {
-	return nil
+func (s *Static) Update(result *schema.Result) (string, error) {
+	return "success", nil
 }
 
 func (s *Static) Delete(id int) error {

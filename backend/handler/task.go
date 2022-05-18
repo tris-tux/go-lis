@@ -82,19 +82,19 @@ func (h *taskHandler) updateTask(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var task schema.Task
-	if err := json.Unmarshal(b, &task); err != nil {
+	var result schema.Result
+	if err := json.Unmarshal(b, &result); err != nil {
 		responseError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	err = service.Update(ctx, &task)
+	message, err := service.Update(ctx, &result)
 	if err != nil {
 		responseError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	responseOK(w, task.TaskId)
+	responseOK(w, message)
 }
 
 func (h *taskHandler) deleteTask(w http.ResponseWriter, r *http.Request) {
