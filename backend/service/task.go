@@ -7,7 +7,7 @@ import (
 	"github.com/tris-tux/go-lis/backend/schema"
 )
 
-func GetAll(ctx context.Context) ([]schema.Task, error) {
+func GetAll(ctx context.Context) ([]schema.Result, error) {
 	return db.GetAll(ctx)
 }
 

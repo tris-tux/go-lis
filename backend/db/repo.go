@@ -9,7 +9,7 @@ import (
 const repoKey = "repoKey"
 
 type Repo interface {
-	GetAll() ([]schema.Task, error)
+	GetAll() ([]schema.Result, error)
 	Insert(task *schema.Task) (string, error)
 	Update(task *schema.Task) error
 	Delete(id int) error
@@ -24,7 +24,7 @@ func getRepo(ctx context.Context) Repo {
 	return ctx.Value(repoKey).(Repo)
 }
 
-func GetAll(ctx context.Context) ([]schema.Task, error) {
+func GetAll(ctx context.Context) ([]schema.Result, error) {
 	return getRepo(ctx).GetAll()
 }
 

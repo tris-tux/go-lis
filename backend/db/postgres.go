@@ -12,11 +12,11 @@ type Postgres struct {
 	DB *sql.DB
 }
 
-func (p *Postgres) GetAll() ([]schema.Task, error) {
+func (p *Postgres) GetAll() ([]schema.Result, error) {
 	query := `
 		SELECT *
 		FROM task
-		ORDER BY task_id;
+		ORDER BY task_id LIMIT 10;
 	`
 
 	rows, err := p.DB.Query(query)
@@ -24,15 +24,47 @@ func (p *Postgres) GetAll() ([]schema.Task, error) {
 		return nil, err
 	}
 
-	taskList := []schema.Task{}
+	listTask := []schema.List{}
+	results := []schema.Result{}
 	for rows.Next() {
-		var t schema.Task
-		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime); err != nil {
+		listTask = nil
+		var t schema.Tasks
+
+		if err := rows.Scan(&t.TaskId, &t.Title, &t.AcctionTime, &t.CreateTime, &t.UpdateTime, &t.IsFinished); err != nil {
 			return nil, err
 		}
-		taskList = append(taskList, t)
+
+		queryDetail := `
+			SELECT detail_id, object_name, is_finished FROM detail WHERE object_task_fk = $1;
+		`
+		rowss, errs := p.DB.Query(queryDetail, t.TaskId)
+
+		if errs != nil {
+			return nil, errs
+		}
+
+		for rowss.Next() {
+			var r schema.List
+			if errs := rowss.Scan(&r.DetailId, &r.ObjectName, &r.IsFinished); errs != nil {
+				return nil, errs
+			}
+			listTask = append(listTask, r)
+		}
+
+		result := schema.Result{
+			TaskId: t.TaskId,
+			Title: t.Title,
+			AcctionTime: t.AcctionTime,
+			CreateTime: t.CreateTime,
+			UpdateTime: t.UpdateTime,
+			IsFinished: t.IsFinished,
+			ObjectiveList: listTask,
+		}
+		
+		results = append(results, result)
+		
 	}
-	return taskList, nil
+	return results, nil
 }
 
 func (p *Postgres) Insert(task *schema.Task) (string, error) {
